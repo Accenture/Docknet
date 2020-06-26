@@ -1,0 +1,26 @@
+# Linux
+.swp
+
+# MacOS
+.DS_Store
+
+# MS temporary docs
+~$*.doc
+~$*.docx
+
+# Python
+.eggs/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# PyCharm
+.idea/
+
+# Temp folder
+/temp/
