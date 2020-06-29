@@ -27,16 +27,17 @@ sudo apt-get install python3.6 python3.6-dev python3-venv
 
 In MacOS one can easily install the needed components with Brew. Brew can be installed with the following command:
 
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.co
-m/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 Then one can install the needed components as follows:
 
 brew install python pipenv
 
-Docker is needed in order to run Docknet as a service. More information on how to install Docker can be found here:
+Docker is needed in order to run Docknet as a service inside a Docker container. More information on how to install Docker can be found here:
 
 https://docs.docker.com/get-docker/
+
+Note the service can also be run without a Docker container, in which case Docker is not needed.
 
 Installation
 ------------
@@ -54,6 +55,10 @@ and install there the Docknet python package along with all the needed Python de
 Running the notebooks
 ---------------------
 
+Activate the docknet_venv virtual environment:
+
+source $HOME/docknet_venv/bin/activate
+
 Go to the main project folder and run there Jupyter Lab with the following command:
 
 jupyter lab
@@ -67,7 +72,7 @@ exploration
 Running the web service
 -----------------------
 
-There are 2 options, running the service directly in your machine or inside the Docker container. For running the service directly in your machine, follow the previous installation steps, then activate the Python virtual environment
+There are 2 options, running the service directly in your machine or inside the Docker container. For running the service directly in your machine, follow the previous installation steps, then activate the docknet_venv virtual environment
 
 source $HOME/docknet_venv/bin/activate
 
