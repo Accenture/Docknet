@@ -90,9 +90,9 @@ docker run -p 8080:8080 -it docknet
 
 Independently on whether the service is run inside the Docker container or not, 4 classification services will then be available at the following URLs, each one corresponding to one of the classification problems illustrated in the 4 notebooks:
 
-http://localhost:8080/chessboard_prediction?x0=2&x1=2\
-http://localhost:8080/cluster_prediction?x0=2&x1=2\
-http://localhost:8080/island_prediction?x0=2&x1=2\
+http://localhost:8080/chessboard_prediction?x0=2&x1=2  
+http://localhost:8080/cluster_prediction?x0=2&x1=2  
+http://localhost:8080/island_prediction?x0=2&x1=2  
 http://localhost:8080/swirl_prediction?x0=2&x1=2
 
 Parameters x0 and x1 correpond to the data point to classify where the values (2, 2) have been given as an example. The services return a JSON such as
