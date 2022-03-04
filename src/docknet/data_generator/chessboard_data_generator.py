@@ -7,16 +7,18 @@ from docknet.data_generator.data_generator import DataGenerator
 
 class ChessboardDataGenerator(DataGenerator):
     """
-    The chessboard data generator generates two classes (0 and 1) of 2D vectors distributed as follows:
+    The chessboard data generator generates two classes (0 and 1) of 2D vectors
+    distributed as follows:
 
         0011
         0011
         1100
         1100
     """
-    def func0(self, x: np.array):
+    def func0(self, x: np.ndarray):
         """
-        Generator function of 2D vectors of class 0 (top-left and bottom-right squares)
+        Generator function of 2D vectors of class 0 (top-left and bottom-right
+        squares)
         :param x: a 2D random generated vector
         :return: the corresponding individual of class 0
         """
@@ -27,9 +29,10 @@ class ChessboardDataGenerator(DataGenerator):
         return np.array([f0, f1])
 
 
-    def func1(self, x: np.array):
+    def func1(self, x: np.ndarray):
         """
-        Generator function of 2D vectors of class 1 (top-right and bottom-left squares)
+        Generator function of 2D vectors of class 1 (top-right and bottom-left
+        squares)
         :param x: a 2D random generated vector
         :return: the corresponding individual of class 1
         """
@@ -39,7 +42,8 @@ class ChessboardDataGenerator(DataGenerator):
             f1 += self.y_half_scale
         return np.array([f0, f1])
 
-    def __init__(self, x0_range: Tuple[float, float], x1_range: Tuple[float, float]):
+    def __init__(self, x0_range: Tuple[float, float],
+                 x1_range: Tuple[float, float]):
         """
         Initializes the chessboard data generator
         :param x0_range: tuple of minimum and maximum x values

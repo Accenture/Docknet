@@ -1,12 +1,12 @@
+from numpy.testing import assert_array_almost_equal
 import pytest
-from numpy.testing import assert_array_equal, assert_array_almost_equal
 
 from docknet.layer.dense_layer import DenseLayer
 from test.unit.docknet.dummy_docknet import *
 
 
 @pytest.fixture
-def layer1() -> DenseLayer:
+def layer1():
     l1 = DenseLayer(2, 3, 'relu')
     l1.W = W1
     l1.b = b1
@@ -61,7 +61,8 @@ def test_backward_propagate(layer1):
     expected_dJdA_prev = dJdA0
     expected_dJdW = dJdW1
     expected_dJdb = dJdb1
-    actual_dJdA_prev, actual_parameter_gradients = layer1.backward_propagate(dJdA1)
+    actual_dJdA_prev, actual_parameter_gradients = layer1.backward_propagate(
+        dJdA1)
     assert_array_almost_equal(actual_dJdA_prev, expected_dJdA_prev)
     assert_array_almost_equal(actual_parameter_gradients['W'], expected_dJdW)
     assert_array_almost_equal(actual_parameter_gradients['b'], expected_dJdb)

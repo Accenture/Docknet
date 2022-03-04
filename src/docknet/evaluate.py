@@ -14,25 +14,25 @@ def parse_args():
     Parse command-line arguments
     :return: parsed arguments
     """
-    parser = argparse.ArgumentParser(description="Train Docknet")
+    parser = argparse.ArgumentParser(description='Train Docknet')
     parser.add_argument('--testset', '-t', action='store', required=True,
-                        help="Dataset with which to evaluate the Docknet")
+                        help='Dataset with which to evaluate the Docknet')
     parser.add_argument('--model', '-m', action='store', required=True,
-                        help="Docknet model file in json or pickle format")
+                        help='Docknet model file in JSON or pickle format')
 
     args = parser.parse_args()
 
     if not os.path.exists(args.testset):
-        print("Testset file {} doesn't exist".format(args.testset))
+        print(f'Testset file {args.testset} doesn\'t exist')
         sys.exit(1)
 
     if not os.path.exists(args.model):
-        print("Model file {} doesn't exist".format(args.model_in))
+        print(f'Model file {args.model_in} doesn\'t exist')
         sys.exit(1)
 
     args.model_type = os.path.splitext(args.model.lower())[1]
-    if not args.model_type in ['.json', '.pkl']:
-        print("Model file must be either a json or a pkl file")
+    if args.model_type not in ['.json', '.pkl']:
+        print('Model file must be either a JSON or a pickle file')
         sys.exit(1)
 
     return args

@@ -2,23 +2,27 @@ import io
 import os
 from typing import List
 
-import pytest
-from docknet import net
 from numpy.testing import assert_array_almost_equal
+import pytest
 
+from docknet import net
 from docknet.data_generator.data_generator import DataGenerator
 from docknet.net import Docknet, read_pickle
 from docknet.initializer.abstract_initializer import AbstractInitializer
 from docknet.layer.abstract_layer import AbstractLayer
 from docknet.optimizer.adam_optimizer import AdamOptimizer
-from docknet.optimizer.gradient_descent_optimizer import GradientDescentOptimizer
+from docknet.optimizer.gradient_descent_optimizer import (
+    GradientDescentOptimizer)
 from test.unit.docknet.dummy_docknet import *
 
-data_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'docknet')
+
+data_dir = os.path.join(
+    os.path.dirname(__file__), '..', '..', 'data', 'docknet')
 temp_dir = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'temp')
 
 if not os.path.exists(temp_dir):
     os.mkdir(temp_dir)
+
 
 class DummyInitializer(AbstractInitializer):
     def initialize(self, network_layers: List[AbstractLayer]):
@@ -29,10 +33,12 @@ class DummyInitializer(AbstractInitializer):
 
 
 class DummyDataGenerator(DataGenerator):
-    def func0(self, x: np.array):
+    @staticmethod
+    def func0(x: np.ndarray) -> np.ndarray:
         return np.array([-5, -5])
 
-    def func1(self, x: np.array):
+    @staticmethod
+    def func1(x: np.ndarray) -> np.ndarray:
         return np.array([5, 5])
 
     def __init__(self):
@@ -40,7 +46,7 @@ class DummyDataGenerator(DataGenerator):
 
 
 @pytest.fixture
-def docknet1() -> Docknet:
+def docknet1():
     docknet1 = Docknet()
     docknet1.add_input_layer(2)
     docknet1.add_dense_layer(3, 'relu')
@@ -52,7 +58,7 @@ def docknet1() -> Docknet:
 
 
 @pytest.fixture
-def docknet2() -> Docknet:
+def docknet2():
     docknet1 = Docknet()
     docknet1.add_input_layer(2)
     docknet1.add_dense_layer(3, 'relu')
@@ -63,15 +69,16 @@ def docknet2() -> Docknet:
     yield docknet1
 
 
-def test_predict(docknet1: Docknet):
-    # Set network parameters as for the dummy initializer in order to enforce a specific expected output
+def test_predict(docknet1):
+    # Set network parameters as for the dummy initializer in order to enforce a
+    # specific expected output
     docknet1.initializer.initialize(docknet1.layers)
     expected = Y_circ
     actual = docknet1.predict(X)
     assert_array_almost_equal(actual, expected)
 
 
-def test_train(docknet1: Docknet):
+def test_train(docknet1):
     docknet1.train(X, Y, batch_size=2, max_number_of_epochs=1)
     expected_optimized_W1 = optimized_W1
     expected_optimized_b1 = optimized_b1
@@ -87,7 +94,7 @@ def test_train(docknet1: Docknet):
     assert_array_almost_equal(actual_optimized_b2, expected_optimized_b2)
 
 
-def test_train_with_generated_data_then_predict(docknet1: Docknet):
+def test_train_with_generated_data_then_predict(docknet1):
     np.random.seed(1)
     data_generator = DummyDataGenerator()
     samples, labels = data_generator.generate_balanced_shuffled_sample(8)
@@ -97,8 +104,9 @@ def test_train_with_generated_data_then_predict(docknet1: Docknet):
     assert_array_almost_equal(predicted_labels, labels)
 
 
-def test_to_json(docknet1: Docknet):
-    # Set network parameters as for the dummy initializer in order to enforce a specific expected output
+def test_to_json(docknet1):
+    # Set network parameters as for the dummy initializer in order to enforce a
+    # specific expected output
     docknet1.initializer.initialize(docknet1.layers)
     expected_path = os.path.join(data_dir, 'docknet1.json')
     with open(expected_path, 'rt', encoding='UTF-8') as fp:
@@ -132,8 +140,9 @@ def test_read_pickle_to_json():
     assert actual_json == expected_json
 
 
-def test_to_pickle_read_pickle_to_json(docknet1: Docknet):
-    # Set network parameters as for the dummy initializer in order to enforce a specific expected output
+def test_to_pickle_read_pickle_to_json(docknet1):
+    # Set network parameters as for the dummy initializer in order to enforce a
+    # specific expected output
     docknet1.initializer.initialize(docknet1.layers)
     pkl_path = os.path.join(temp_dir, 'docknet1.pkl')
     expected_json_path = os.path.join(data_dir, 'docknet1.json')

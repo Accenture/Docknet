@@ -1,8 +1,8 @@
 from typing import Union
 
 import numpy as np
-import pytest
 from numpy.testing import assert_array_almost_equal
+import pytest
 
 from docknet.function.activation_function import relu, sigmoid, tanh
 
@@ -16,9 +16,10 @@ sigmoid_test_cases = [
 ]
 
 
-@pytest.mark.parametrize("x, expected", sigmoid_test_cases)
-def test_sigmoid(x: Union[float, np.array], expected: Union[float, np.array]):
-    actual  = sigmoid(x)
+@pytest.mark.parametrize('x, expected', sigmoid_test_cases)
+def test_sigmoid(x: Union[float, np.ndarray],
+                 expected: Union[float, np.ndarray]):
+    actual = sigmoid(x)
     assert_array_almost_equal(actual, expected, verbose=True)
 
 
@@ -32,8 +33,8 @@ relu_test_cases = [
 ]
 
 
-@pytest.mark.parametrize("x, expected", relu_test_cases)
-def test_relu(x: Union[float, np.array], expected: Union[float, np.array]):
+@pytest.mark.parametrize('x, expected', relu_test_cases)
+def test_relu(x: Union[float, np.ndarray], expected: Union[float, np.ndarray]):
     actual = relu(x)
     assert_array_almost_equal(actual, expected, verbose=True)
 
@@ -47,7 +48,7 @@ tanh_test_cases = [
 ]
 
 
-@pytest.mark.parametrize("x, expected", tanh_test_cases)
-def test_tanh(x: Union[float, np.array], expected: Union[float, np.array]):
+@pytest.mark.parametrize('x, expected', tanh_test_cases)
+def test_tanh(x: Union[float, np.ndarray], expected: Union[float, np.ndarray]):
     actual = tanh(x)
     assert_array_almost_equal(actual, expected, verbose=True)
