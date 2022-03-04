@@ -158,7 +158,8 @@ class Docknet(object):
     def train(self, X: np.ndarray, Y: np.ndarray, batch_size: int,
               max_number_of_epochs: int, error_delta: float = 0.,
               max_epochs_within_delta: int = -1,
-              stop_file_pathname: str = None, initialize: bool = True):
+              stop_file_pathname: Optional[str] = None,
+              initialize: bool = True):
         """
         Train the network for a given set of input vectors and expected
         predictions up to one of two stopping conditions:

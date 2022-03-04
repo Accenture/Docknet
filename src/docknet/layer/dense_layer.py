@@ -138,7 +138,7 @@ class DenseLayer(AbstractLayer):
         del self.cached_A_previous
         del self.cached_Z
 
-    def to_dict(self) -> Dict[str, str]:
+    def to_dict(self) -> Dict[str, Union[int, Dict[str, np.ndarray], str]]:
         """
         Converts this layer to a Python dictionary for JSON serialization
         (keeping the info needed to later create the layer back from the same

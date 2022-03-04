@@ -1,5 +1,5 @@
 import os
-from typing import Any
+from typing import Any, Optional
 
 import yaml
 
@@ -15,7 +15,7 @@ class Config:
         """
         Private class used to actually load the config.yaml file.
         """
-        def __init__(self, path: str = None):
+        def __init__(self, path: Optional[str] = None):
             """
             Loads the config.yaml file as a Python dictionary
             :param path: path to the configuration file to load; if None, it
@@ -35,7 +35,7 @@ class Config:
     # dictionary will be stored
     instance = None
 
-    def __init__(self, path: str = None):
+    def __init__(self, path: Optional[str] = None):
         """
         Load the config file if it was not already loaded
         :param path: path to the configuration file to load; if None, it will

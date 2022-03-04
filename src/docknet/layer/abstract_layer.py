@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Union
+from typing import Any, Dict, Union, Tuple
 
 import numpy as np
 
@@ -74,7 +74,7 @@ class AbstractLayer(ABC):
             super().__setattr__(attr, value)
 
     @abstractmethod
-    def forward_propagate(self, A_previous: np.ndarray):
+    def forward_propagate(self, A_previous: np.ndarray) -> np.ndarray:
         """
         Computes A, the output of this layer, given A_previous, the output of
         the previous layer
@@ -84,7 +84,7 @@ class AbstractLayer(ABC):
         pass
 
     @abstractmethod
-    def cached_forward_propagate(self, A_previous: np.ndarray):
+    def cached_forward_propagate(self, A_previous: np.ndarray) -> np.ndarray:
         """
         Performs the same computation as forward_propagate but also caches the
         values required to later perform the backward propagation
@@ -94,7 +94,8 @@ class AbstractLayer(ABC):
         pass
 
     @abstractmethod
-    def backward_propagate(self, dJdA: Union[float, np.ndarray]):
+    def backward_propagate(self, dJdA: Union[float, np.ndarray]) \
+            -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
         """
         Given the gradient of the cost function J wrt A, ∂J/∂A, computes a
         tuple containing:

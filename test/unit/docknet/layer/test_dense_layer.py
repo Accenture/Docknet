@@ -6,7 +6,7 @@ from test.unit.docknet.dummy_docknet import *
 
 
 @pytest.fixture
-def layer1():
+def layer1() -> DenseLayer:
     l1 = DenseLayer(2, 3, 'relu')
     l1.W = W1
     l1.b = b1

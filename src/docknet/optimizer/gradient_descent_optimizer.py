@@ -11,7 +11,7 @@ class GradientDescentOptimizer(AbstractOptimizer):
         self.learning_rate = learning_rate
         self.network_params: List[Tuple]
 
-    def reset(self, network_layers: List[AbstractLayer]) -> None:
+    def reset(self, network_layers: List[AbstractLayer]):
         """
         Initialization of gradient descent optimizer before starting a
         training: nothing is required to be done
