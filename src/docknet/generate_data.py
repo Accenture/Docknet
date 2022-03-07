@@ -12,7 +12,7 @@ def parse_args():
     Parse command-line arguments
     :return: parsed arguments
     """
-    parser = argparse.ArgumentParser(description='Generate dataset')
+    parser = argparse.ArgumentParser(description='Generate a random dataset')
     parser.add_argument('--generator', '-g', action='store', required=True,
                         help=f'Data generator to use '
                              f'({",".join(data_generators.keys())})')

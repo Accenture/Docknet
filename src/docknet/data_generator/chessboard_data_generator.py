@@ -28,7 +28,6 @@ class ChessboardDataGenerator(DataGenerator):
             f0 += self.x_half_scale
         return np.array([f0, f1])
 
-
     def func1(self, x: np.ndarray):
         """
         Generator function of 2D vectors of class 1 (top-right and bottom-left

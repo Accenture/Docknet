@@ -12,7 +12,8 @@ def parse_args():
     Parse command-line arguments
     :return: parsed arguments
     """
-    parser = argparse.ArgumentParser(description='Train Docknet')
+    parser = argparse.ArgumentParser(description='Predict with a pre-trained '
+                                                 'Docknet')
     parser.add_argument('--dataset', '-d', action='store', required=True,
                         help='Dataset with which to predict')
     parser.add_argument('--ignore_last_row', '-i', action='store_true',

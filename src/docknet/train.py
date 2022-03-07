@@ -17,7 +17,8 @@ def parse_args():
     Parse command-line arguments
     :return: parsed arguments
     """
-    parser = argparse.ArgumentParser(description='Train Docknet')
+    parser = argparse.ArgumentParser(description='Train a Docknet whose layers'
+                                                 ' are defined in a JSON')
     parser.add_argument('--trainingset', '-t', action='store', required=True,
                         help='Dataset with which to train the Docknet')
     parser.add_argument('--model-in', '-mi', action='store', required=True,

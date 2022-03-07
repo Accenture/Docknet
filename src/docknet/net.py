@@ -3,7 +3,7 @@ import math
 import os
 import pickle
 import sys
-from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Union
+from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Union, Callable
 
 import numpy as np
 
@@ -54,6 +54,10 @@ class Docknet(object):
         :param notifier:
         """
         self.layers: List[AbstractLayer] = []
+        self._forward_cost_function: Optional[Callable[
+            [np.ndarray, np.ndarray], np.ndarray]] = None
+        self._backward_cost_function: Optional[Callable[
+            [np.ndarray, np.ndarray], np.ndarray]] = None
         self._cost_function_name: Optional[str] = None
         self._initializer: Optional[AbstractInitializer] = None
         self._optimizer: Optional[AbstractOptimizer] = None
@@ -103,7 +107,10 @@ class Docknet(object):
         Gets the network's cost function name
         :return: the network's cost function name
         """
-        return self._cost_function_name
+        if self._forward_cost_function is None:
+            return 'None'
+        else:
+            return self._forward_cost_function.__name__
 
     @cost_function.setter
     def cost_function(self, cost_function_name: str):
@@ -113,8 +120,8 @@ class Docknet(object):
         :param cost_function_name: the cost function name (e.g. 'cross_entropy'
         )
         """
-        self._cost_function, self._cost_function_prime = get_cost_function(
-            cost_function_name)
+        self._forward_cost_function, self._backward_cost_function = \
+            get_cost_function(cost_function_name)
 
     @property
     def optimizer(self) -> AbstractOptimizer:
@@ -145,8 +152,8 @@ class Docknet(object):
         for layer in self.layers:
             A = layer.cached_forward_propagate(A)
         Y_circ = A
-        J = self._cost_function(Y_circ, Y)
-        dJdY_circ = self._cost_function_prime(Y_circ, Y)
+        J = self._forward_cost_function(Y_circ, Y)
+        dJdY_circ = self._backward_cost_function(Y_circ, Y)
         dJdA = dJdY_circ
         network_gradients = []
         for layer in reversed(self.layers):
