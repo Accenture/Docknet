@@ -37,18 +37,17 @@ source "$DOCKNET_VENV"/bin/activate
 echo "**********************************"
 echo "* Installing global dependencies *"
 echo "**********************************"
-pip install --upgrade pip==19.3.1
-pip install --upgrade setuptools==45.0.0
-pip install --upgrade wheel==0.33.6
+pip install --upgrade pip==22.0.3
+pip install --upgrade setuptools==60.9.3
+pip install --upgrade wheel==0.37.1
 pip install -r $ROOTFOLDER/requirements.txt
 if [ "$USER" != "$DOCKER_USER" ]; then
-  pip install pytest==5.3.2
-  pip install jupyterlab
+  pip install -r $ROOTFOLDER/requirements-dev.txt
 fi
 
 echo "*****************************"
 echo "* Installing Python package *"
-echo "******* **********************"
+echo "*****************************"
 
 cd "$ROOTFOLDER"
 pip install .

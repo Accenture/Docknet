@@ -3,16 +3,16 @@ from typing import Tuple
 import numpy as np
 
 from docknet.data_generator.data_generator import DataGenerator
-from docknet.util.geometry import random_to_polar, polar_to_cartesian
+from docknet.util.geometry import polar_to_cartesian, random_to_polar
 
 
 class SwirlDataGenerator(DataGenerator):
     """
-    The swirl data generator generates two classes (0 and 1) of 2D vectors distributed as 2 spirals with opposite phase
-    that touch in their centers
+    The swirl data generator generates two classes (0 and 1) of 2D vectors
+    distributed as 2 spirals with opposite phase that touch in their centers
     """
 
-    def swirl(self, x: np.array, phase):
+    def swirl(self, x: np.ndarray, phase: float) -> np.ndarray:
         """
         Generates individuals of a swirl with a given phase
         :param x: a random 2D array of scalars between 0 and 1
@@ -33,29 +33,28 @@ class SwirlDataGenerator(DataGenerator):
         f = cartesian * self.scale + self.origin
         return f
 
-    def swirl_phase_0(self, x: np.array):
+    def swirl_phase_0(self, x: np.ndarray) -> np.ndarray:
         """
         Generates individuals of a swirl with phase 0
         :param x: a random 2D array of scalars between 0 and 1
-        :param phase: the swirl phase
         :return: a swirl individual
         """
         f = self.swirl(x, 0.)
         return f
 
-    def swirl_phase_180(self, x):
+    def swirl_phase_180(self, x: np.ndarray) -> np.ndarray:
         """
         Generates individuals of a swirl with phase 180
         :param x: a random 2D array of scalars between 0 and 1
-        :param phase: the swirl phase
         :return: a swirl individual
         """
         f = self.swirl(x, np.pi)
         return f
 
-    def __init__(self, x0_range: Tuple[float, float], x1_range: Tuple[float, float]):
+    def __init__(self, x0_range: Tuple[float, float],
+                 x1_range: Tuple[float, float]):
         """
-        Initializes the island data data generator
+        Initializes the island data generator
         :param x0_range: tuple of minimum and maximum x values
         :param x1_range: tuple of minimum and maximum y values
         """

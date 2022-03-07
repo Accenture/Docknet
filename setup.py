@@ -7,18 +7,20 @@ import io
 import os
 import os.path
 import sys
+from typing import List, Tuple
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 
-MIN_PYTHON_VERSION = (3, 6)
+MIN_PYTHON_VERSION = (3, 8)
 
 PKGNAME = 'docknet'
 DESC = '''
-A pure Numpy implementation of neural networks
+A pure NumPy implementation of neural networks
 '''
 
 # --------------------------------------------------------------------
+
 
 def pkg_version():
     """Read the package version from VERSION.txt"""
@@ -26,7 +28,9 @@ def pkg_version():
     with open(os.path.join(basedir, 'VERSION.txt'), 'r') as f:
         return f.readline().strip()
 
-def parse_requirements(filename='requirements.txt'):
+
+def parse_requirements(filename: str = 'requirements.txt'
+                       ) -> Tuple[List[str], List[str]]:
     """Read the requirements file"""
     pathname = os.path.join(os.path.dirname(__file__), filename)
     modules = []
@@ -42,13 +46,16 @@ def parse_requirements(filename='requirements.txt'):
                 modules.append(line)
     return modules, urls
 
+
 # --------------------------------------------------------------------
 
 VERSION = pkg_version()
 
 if sys.version_info < MIN_PYTHON_VERSION:
-    sys.exit('**** Sorry, {} {} needs at least Python {}'.format(
-        PKGNAME, VERSION, '.'.join(map(str, MIN_PYTHON_VERSION))))
+    sys.exit(
+        f'**** Sorry, {PKGNAME} {VERSION} needs at least Python '
+        f'{".".join(map(str, MIN_PYTHON_VERSION))}'
+    )
 
 install_requires, dependency_links = parse_requirements()
 
@@ -83,7 +90,7 @@ setup_args = dict(
         'docknet_train = docknet.train:main'
     ]},
 
-    include_package_data=False,  # otherwise package_data is not used
+    include_package_data=False,  # otherwise, package_data is not used
     package_data={
         PKGNAME: [
             'resources/config.yaml',
@@ -99,7 +106,8 @@ setup_args = dict(
     tests_require=['pytest'],
 
     # More metadata
-    keywords=['Accenture', 'The Dock', 'deep learning', 'neural network', 'numpy', 'docknet'],
+    keywords=['Accenture', 'The Dock', 'deep learning', 'neural network',
+              'numpy', 'docknet'],
     classifiers=[
         'Programming Language :: Python :: 3 :: Only',
         'License :: Other/Proprietary License',

@@ -1,11 +1,12 @@
 import os
 
+from flask import Flask, jsonify, request, Response
+from flask_restful import Api, Resource
 import numpy as np
 
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
 from docknet.net import read_pickle
 from docknet.util.config import Config
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,19 +23,20 @@ config = Config()
 
 class PredictionServer(Resource):
     """
-    REST API layer on top of docknet model that returns predicted values, given an input vector defined by 2 parameters
-    x0 and x1. This class is to be inherited by another class that provides the path to the Docknet pkl model file to
-    use for making predictions.
+    REST API layer on top of Docknet model that returns predicted values, given
+    an input vector defined by 2 parameters x0 and x1. This class is to be
+    inherited by another class that provides the path to the Docknet pickle
+    model file to use for making predictions.
     """
     def __init__(self, pkl_pathname: str):
         """
         Create a prediction server
-        :param pkl_pathname: path to the Docknet pkl model file to load
+        :param pkl_pathname: path to the Docknet pickle model file to load
         """
         super().__init__()
         self.docknet = read_pickle(pkl_pathname)
 
-    def get(self):
+    def get(self) -> Response:
         """
         Returns the predicted value for
         :return:
@@ -44,11 +46,11 @@ class PredictionServer(Resource):
         if x0 is None:
             status_code = 400
             success = False
-            message = "Missing mandatory argument x0"
+            message = 'Missing mandatory argument x0'
         elif x1 is None:
             status_code = 400
             success = False
-            message = "Missing mandatory argument x1"
+            message = 'Missing mandatory argument x1'
         else:
             success = True
             status_code = 200
@@ -80,18 +82,19 @@ class SwirlPredictionServer(PredictionServer):
         super().__init__(swirl_model_pathname)
 
 
-# Add the prediction servers for each one of the 4 models chessboard, cluster, island and swirl
-api.add_resource(ChessboardPredictionServer, "/chessboard_prediction")
-api.add_resource(ClusterPredictionServer, "/cluster_prediction")
-api.add_resource(IslandPredictionServer, "/island_prediction")
-api.add_resource(SwirlPredictionServer, "/swirl_prediction")
+# Add the prediction servers for each one of the 4 models chessboard, cluster,
+# island and swirl
+api.add_resource(ChessboardPredictionServer, '/chessboard_prediction')
+api.add_resource(ClusterPredictionServer, '/cluster_prediction')
+api.add_resource(IslandPredictionServer, '/island_prediction')
+api.add_resource(SwirlPredictionServer, '/swirl_prediction')
 
 
 def main():
-    # Start the service; the service stops when the process is killed or the docker container running this service is
-    # shut down
+    # Start the service; the service stops when the process is killed or the
+    # docker container running this service is shut down
     app.run(**config.app)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

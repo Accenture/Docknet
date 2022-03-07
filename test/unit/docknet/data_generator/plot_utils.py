@@ -1,9 +1,9 @@
-from typing import Union
-
+import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_scatter(axe, X0: np.array, X1: np.array, color: Union[float, np.array], x0_range, x1_range, title: str):
+def plot_scatter(axe: plt.Axes, X0: np.ndarray, X1: np.ndarray, color,
+                 x0_range, x1_range, title: str):
     axe.scatter(X0, X1, c=color, s=2)
     aspect = (x0_range[1] - x0_range[0]) / (x1_range[1] - x1_range[0])
     axe.set_aspect(aspect)

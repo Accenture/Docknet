@@ -5,6 +5,7 @@ import pytest
 
 from docknet.function.cost_function import cross_entropy, dcross_entropy_dYcirc
 
+
 cross_entropy_test_cases = [
     (np.array([[1., 0.]]), np.array([[1., 0.]]), 0.),
     (np.array([[1., 0.]]), np.array([[0., 1.]]), np.inf),
@@ -14,9 +15,10 @@ cross_entropy_test_cases = [
 ]
 
 
-@pytest.mark.parametrize("Y, Y_circ, expected", cross_entropy_test_cases)
-def test_cross_entropy(Y: np.array, Y_circ: np.array, expected: float):
-    # Disable Numpy warnings when trying to divide by 0 in the border cases, otherwise these tests produce warnings
+@pytest.mark.parametrize('Y, Y_circ, expected', cross_entropy_test_cases)
+def test_cross_entropy(Y: np.ndarray, Y_circ: np.ndarray, expected: float):
+    # Disable NumPy warnings when trying to divide by 0 in the border cases,
+    # otherwise these tests produce warnings
     np.seterr(divide='ignore', over='ignore')
     actual = cross_entropy(Y_circ, Y)
     np.testing.assert_almost_equal(actual, expected)
@@ -24,17 +26,22 @@ def test_cross_entropy(Y: np.array, Y_circ: np.array, expected: float):
 
 dcross_entropy_dYcirc_test_cases = [
     (np.array([[1., 0.]]), np.array([[1., 0.]]), np.array([[-1., 1.]])),
-    # Note sys.float_info.max returns the maximum float the machine can represent, which is an approximation of inf
-    (np.array([[1., 0.]]), np.array([[0., 1.]]), np.array([[-sys.float_info.max, sys.float_info.max]])),
+    # Note sys.float_info.max returns the maximum float the machine can
+    # represent, which is an approximation of inf
+    (np.array([[1., 0.]]), np.array([[0., 1.]]), np.array(
+        [[-sys.float_info.max, sys.float_info.max]])),
     (np.array([[1., 0.]]), np.array([[0.5, 0.]]), np.array([[-2., 1.]])),
     (np.array([[1., 0.]]), np.array([[1., 0.5]]), np.array([[-1., 2.]])),
     (np.array([[1., 0.]]), np.array([[0.5, 0.5]]), np.array([[-2., 2.]])),
 ]
 
 
-@pytest.mark.parametrize("Y, Y_circ, expected", dcross_entropy_dYcirc_test_cases)
-def test_dcross_entropy_dYcirc(Y: np.array, Y_circ: np.array, expected: np.array):
-    # Disable Numpy warnings when trying to divide by 0 in the border cases, otherwise these tests produce warnings
+@pytest.mark.parametrize('Y, Y_circ, expected',
+                         dcross_entropy_dYcirc_test_cases)
+def test_dcross_entropy_dYcirc(Y: np.ndarray, Y_circ: np.ndarray,
+                               expected: np.ndarray):
+    # Disable NumPy warnings when trying to divide by 0 in the border cases,
+    # otherwise these tests produce warnings
     np.seterr(divide='ignore', invalid='ignore')
     actual = dcross_entropy_dYcirc(Y_circ, Y)
     np.testing.assert_array_almost_equal(actual, expected)

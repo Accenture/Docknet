@@ -8,7 +8,8 @@ from docknet.util.geometry import polar_to_cartesian, random_to_polar
 
 class IslandDataGenerator(DataGenerator):
     """
-    The chessboard data generator generates two classes (0 and 1) of 2D vectors distributed as follows:
+    The chessboard data generator generates two classes (0 and 1) of 2D vectors
+    distributed as follows:
 
          111
         1   1
@@ -16,8 +17,7 @@ class IslandDataGenerator(DataGenerator):
         1   1
          111
     """
-
-    def island(self, x: np.array):
+    def island(self, x: np.ndarray) -> np.ndarray:
         """
         Generator function of 2D vectors of class 0 (the island in the center)
         :param x: a 2D random generated vector
@@ -27,20 +27,23 @@ class IslandDataGenerator(DataGenerator):
         f = cartesian * self.island_radius + self.island_origin
         return f
 
-    def sea(self, x: np.array):
+    def sea(self, x: np.ndarray) -> np.ndarray:
         """
-        Generator function of 2D vectors of class 0 (the ring around the island)
+        Generator function of 2D vectors of class 0 (the ring around the
+        island)
         :param x: a 2D random generated vector
         :return: the corresponding individual of class 0
         """
         polar = random_to_polar(x)
         polar[0] = polar[0] * self.sea_width + self.sea_inner_diameter
-        cartesian = polar_to_cartesian(polar) * self.sea_scale + self.island_origin
+        cartesian = (polar_to_cartesian(polar) * self.sea_scale
+                     + self.island_origin)
         return cartesian
 
-    def __init__(self, x0_range: Tuple[float, float], x1_range: Tuple[float, float]):
+    def __init__(self, x0_range: Tuple[float, float],
+                 x1_range: Tuple[float, float]):
         """
-        Initializes the island data data generator
+        Initializes the island data generator
         :param x0_range: tuple of minimum and maximum x values
         :param x1_range: tuple of minimum and maximum y values
         """
