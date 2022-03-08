@@ -309,3 +309,7 @@ def read_json(pathname: str) -> Docknet:
             params = {k: np.array(v) for k, v in desc['params'].items()}
             docknet.layers[-1].params = params
     return docknet
+
+
+def method():
+    print(10)
