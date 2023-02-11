@@ -1,4 +1,4 @@
 pytest==7.0.1
 jupyterlab==3.3.0
 # ipython 8.1.0 is not compatible with Python < 3.9
-ipython==8.0.1
+ipython==8.10.0
