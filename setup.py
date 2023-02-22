@@ -12,7 +12,7 @@ from typing import List, Tuple
 from setuptools import find_packages, setup
 
 
-MIN_PYTHON_VERSION = (3, 8)
+MIN_PYTHON_VERSION = (3, 9)
 
 PKGNAME = 'docknet'
 DESC = '''
@@ -70,8 +70,7 @@ setup_args = dict(
     author_email='j.sastre.martinez@accenture.com',
 
     # Locate packages
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=find_packages(exclude=['tests']),
 
     # Requirements
     python_requires='>='+'.'.join(map(str, MIN_PYTHON_VERSION)),
