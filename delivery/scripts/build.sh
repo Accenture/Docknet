@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PYTHON=`command -v python3`
+PYTHON=`command -v python3.9`
 DOCKNET_VENV=$HOME/docknet_venv
 SCRIPTFOLDER="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOTFOLDER="$SCRIPTFOLDER/../.."
