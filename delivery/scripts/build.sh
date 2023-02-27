@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PYTHON=`command -v python3`
+PYTHON=`command -v python3.9`
 DOCKNET_VENV=$HOME/docknet_venv
 SCRIPTFOLDER="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOTFOLDER="$SCRIPTFOLDER/../.."
@@ -37,9 +37,9 @@ source "$DOCKNET_VENV"/bin/activate
 echo "**********************************"
 echo "* Installing global dependencies *"
 echo "**********************************"
-pip install --upgrade pip==22.0.3
-pip install --upgrade setuptools==60.9.3
-pip install --upgrade wheel==0.37.1
+pip install --upgrade pip==23.0.1
+pip install --upgrade setuptools==67.3.3
+pip install --upgrade wheel==0.38.4
 pip install -r $ROOTFOLDER/requirements.txt
 if [ "$USER" != "$DOCKER_USER" ]; then
   pip install -r $ROOTFOLDER/requirements-dev.txt

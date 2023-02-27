@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL docknet.docker.version="1"
 
@@ -15,7 +15,10 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Python and common tools
-RUN apt-get install -y python3.8 python3.8-dev python3-venv
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:deadsnakes/ppa
+RUN DEBIAN_FRONTEND=noninteractive TZ=Europe/Dublin apt-get -y install tzdata
+RUN apt-get install -y python3.9 python3.9-dev python3.9-venv
 
 # Create Docker user
 RUN useradd -ms /bin/bash docker
